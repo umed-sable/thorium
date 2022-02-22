@@ -1,14 +1,15 @@
+
 function printDate(){
-    console.log("today is 21st")
+    console.log(new Date().getDate())
 }
 function printMonth(){
-    console.log("month is February.");
+    console.log((new Date().getMonth())+1);
 }
 function getBatchInfo(){
     console.log("Thorium, week3 day1, the topic for today is Nodejs module system")
 }
 
 
-module.express.date = printDate;
-module.express.month = printMonth;
-module.exports.batchinfo = getBatchInfo; 
+module.exports.printDate = printDate;
+module.exports.printMonth = printMonth;
+module.exports.batchInfo = getBatchInfo; 

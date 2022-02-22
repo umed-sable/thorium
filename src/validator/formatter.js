@@ -1,12 +1,12 @@
 function stringTrim(str){
-    return str.trim()                     
+    console.log(str.trim())                     
 }
 function lcase(str){
-    return str.toLowerCase()            // let sringCase = 'funCTIonUp' //
-}                                       // return(stringCase.toLowerCase())
+    console.log(str.toLowerCase())            
+}                                      
 function ucase(str){                   
-    return str.toUpperCase()             // let sringCase = 'functionUp' //
-}                                        // return(stringCase.toUpperCase())
+    console.log(str.toUpperCase())             
+}                                        
 module.exports.trim = stringTrim
-module.exports.lowercase = lcase
-module.exports.upperCase = ucase
+module.exports.toLowerCase = lcase
+module.exports.toUpperCase = ucase
