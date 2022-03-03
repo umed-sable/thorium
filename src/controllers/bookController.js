@@ -11,19 +11,6 @@ const createBook= async function (req, res) {
     let authorId = book.author
     let publisherId = book.publisher
 
-    // let id = book.auther;
-    // let pubId = book.publisher;
-    // let autherCheck = await authorModel.findone({_id:{$eq:id}});
-    // let publisherCheck = await publishermodel.findone({_id:{$eq:pubId}})
-    // console.log(id,pubId)
-    // if (id === undefined || pubId === undefined){
-    //     return res.send ("please provide publisher and author details.")
-    // }else if (autherCheck === null || publisherCheck === null){
-    //     return res.send ("author or publisher do not exist.")
-    // }else {
-    //     let bookCreated = await bookModel.create(book)
-    //      return res.send ({data: bookCreated})
-    // }
     
 
     
@@ -48,14 +35,34 @@ const createBook= async function (req, res) {
 const getBooks= async function (req, res) {
     let books = await bookModel.find().populate('author publisher')
     res.send({data: books})
-// }
+ }
 
 // const getBooks= async function (req, res) {
 //     let books = await bookModel.find().populate("author, publisher")
 //     res.send({data: books})
-
+ const putBooks = async function(req,res){
+    let publisherId= await publisherModel.find({name:{$in:["Penguin", "HarperCollins"]}}).select({_id:1})
+    let arr=[]
+    arr=publisherId.map(e=>e._id)
+    let data= await bookModel.updateMany(
+                {publisher:{$in:arr}},
+                {isHardCover:true},
+                {new:true}
+    )  
+    let authorId= await authorModel.find({rating:{$gt:3.5}}).select({_id:1})
+    let arr1=[]
+    arr1=authorId.map(e=>e._id)
+    let data1= await bookModel.updateMany(
+        {author:{$in:arr1}},
+        {$inc:{price:+10}},
+        {new:true})
+    let latestBooks= await bookModel.find()
+    res.send(latestBooks);
 
 }
+ 
+
+
 
 // const getBooksWithAuthorDetails = async function (req, res) {
 //     let specificBook = await bookModel.find().populate('author_id')
@@ -65,4 +72,5 @@ const getBooks= async function (req, res) {
 
 module.exports.createBook= createBook
 module.exports.getBooks= getBooks
+module.exports.putBooks= putBooks
 // module.exports.getBooksWithAuthorDetails = getBooksWithAuthorDetails
